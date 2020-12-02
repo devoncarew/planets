@@ -29,9 +29,9 @@ class SolarSystemWidget extends StatefulWidget {
   final SolarBody mainBody;
 
   SolarSystemWidget({
-    Key key,
-    @required this.title,
-    @required this.mainBody,
+    Key? key,
+    required this.title,
+    required this.mainBody,
   }) : super(key: key);
 
   @override
@@ -39,8 +39,8 @@ class SolarSystemWidget extends StatefulWidget {
 }
 
 class _SolarSystemState extends State<SolarSystemWidget> {
-  Timer timer;
-  ValueNotifier<DateTime> notifier;
+  late Timer timer;
+  late ValueNotifier<DateTime> notifier;
 
   final StarField _starField = StarField.generate();
 
@@ -91,7 +91,7 @@ class _SolarSystemState extends State<SolarSystemWidget> {
             ]),
             child: ValueListenableBuilder<DateTime>(
               valueListenable: notifier,
-              builder: (BuildContext context, DateTime time, Widget child) {
+              builder: (BuildContext context, DateTime time, Widget? child) {
                 List<PlanetWidget> children = [];
                 _positionSatellites(body, center, pxPerAU, children, time);
                 return Stack(fit: StackFit.expand, children: children);
@@ -158,7 +158,7 @@ class StarFieldPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     for (Star star in starField.stars) {
       final Paint paint = Paint()
-        ..color = Colors.grey[600].withOpacity(star.intensity);
+        ..color = Colors.grey[600]!.withOpacity(star.intensity);
 
       canvas.drawCircle(
         new Offset(star.location.x * size.width, star.location.y * size.height),
@@ -185,18 +185,18 @@ class OrbitPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final Paint linePaint = Paint()
-      ..color = Colors.grey[600]
+      ..color = Colors.grey[600]!
       ..style = PaintingStyle.stroke;
-    final Paint tickPaint = Paint()..color = Colors.grey[600];
+    final Paint tickPaint = Paint()..color = Colors.grey[600]!;
 
     for (SolarBody child in body.satellites) {
       if (child.incrementCount != null) {
         // Draw the orbit path.
         canvas.drawCircle(
-            new Offset(center.x, center.y), child.au * pxPerAU, linePaint);
+            new Offset(center.x as double, center.y as double), child.au * pxPerAU, linePaint);
 
         // Draw n ticks on the path.
-        final int max = child.incrementCount;
+        final int max = child.incrementCount!;
         List<Offset> ticks = List.generate(max, (int index) {
           double radians = (index.toDouble() / max.toDouble()) * 2.0 * pi;
           return Offset(
@@ -237,7 +237,7 @@ class PlanetWidget extends StatelessWidget {
           shape: BoxShape.circle,
           boxShadow: [
             new BoxShadow(
-              color: Colors.grey[900],
+              color: Colors.grey[900]!,
               offset: new Offset(2.0, 2.0),
             )
           ],

@@ -10,12 +10,12 @@ class SolarBody {
   final String name;
   final Color color;
   final double au;
-  final int incrementCount;
+  final int? incrementCount;
   final bool useForScaling;
 
   final BodySize size;
   final List<SolarBody> satellites;
-  final LocationCalculator locationCalculator;
+  final LocationCalculator? locationCalculator;
 
   SolarBody(
     this.name,
@@ -35,7 +35,7 @@ class SolarBody {
   }
 
   double getRadiansForTime(DateTime time) {
-    return locationCalculator(this, time);
+    return locationCalculator!(this, time);
   }
 }
 
@@ -62,14 +62,14 @@ SolarBody _createSun() {
 
   planets.add(SolarBody(
     'Mercury',
-    Colors.red[800],
+    Colors.red[800]!,
     0.387,
     size: BodySize.small,
     locationCalculator: scaleTime(_hoursLocation, 0.24),
   ));
   planets.add(SolarBody(
     'Venus',
-    Colors.orange[300],
+    Colors.orange[300]!,
     0.722,
     size: BodySize.medium,
     locationCalculator: scaleTime(_hoursLocation, 0.62),
@@ -93,7 +93,7 @@ SolarBody _createSun() {
   ));
   planets.add(SolarBody(
     'Mars',
-    Colors.red[400],
+    Colors.red[400]!,
     1.52,
     size: BodySize.medium,
     incrementCount: 60,
@@ -101,7 +101,7 @@ SolarBody _createSun() {
   ));
   planets.add(SolarBody(
     'Jupiter',
-    Colors.red[600],
+    Colors.red[600]!,
     2.7,
     size: BodySize.large,
     useForScaling: false,
